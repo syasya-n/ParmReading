@@ -59,7 +59,7 @@ def handle_message(event):
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image(event):
-     try:
+    try:
         # メッセージIDを受け取る
         message_id = event.message.id
         # メッセージIDに含まれるmessage_contentを抽出する
@@ -82,7 +82,7 @@ def handle_image(event):
         text = "error" 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text='画像です')
+        TextSendMessage(text=text)
     )
 
 if __name__ == "__main__":
