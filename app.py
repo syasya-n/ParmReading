@@ -53,7 +53,13 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    try:
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=event.message.text))
+
+@handler.add(MessageEvent, message=ImageMessage)
+def handle_image(event):
+     try:
         # メッセージIDを受け取る
         message_id = event.message.id
         # メッセージIDに含まれるmessage_contentを抽出する
@@ -74,12 +80,6 @@ def handle_message(event):
     except:
         # エラー時のメッセージ
         text = "error" 
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
-
-@handler.add(MessageEvent, message=ImageMessage)
-def handle_image(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text='画像です')
