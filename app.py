@@ -72,8 +72,22 @@ def handle_image(event):
         print(detected_faces)
         # 検出結果に応じて処理を分ける
         if detected_faces != []:
-            # 検出された顔の最初のIDを取得
-            text = detected_faces[0].face_id
+           # 顔検出ができたら顔認証を行う
+            valified = face_client.face.verify_face_to_person(
+                face_id = detected_faces[0].face_id,
+                person_group_id = PERSON_GROUP_ID,
+                person_id = PERSON_ID_ZAKOSHI
+            )
+            # 認証結果に応じて処理を変える
+            if valified:
+                if valified.is_identical:
+                    # 顔認証が一致した場合（スコアもつけて返す）
+                    text = 'この写真はザコシショウです(score:{:.3f})'.format(valified.confidence)
+                else:
+                    # 顔認証が一致した場合（スコアもつけて返す）
+                    text = 'この写真はザコシショウではありません(score:{:.3f})'.format(valified.confidence)
+            else:
+                text = '識別できませんでした。'
         else:
             # 検出されない場合のメッセージ
             text = "no faces detected"
