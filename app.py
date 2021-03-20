@@ -55,6 +55,12 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    language_list = ["Ruby", "Python", "PHP", "Java", "C"]
+
+    items = [QuickReplyButton(action=MessageAction(label=f"{language}", text=f"{language}が好き")) for language in language_list]
+
+    messages = TextSendMessage(text="どの言語が好きですか？",
+                               quick_reply=QuickReply(items=items))
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
