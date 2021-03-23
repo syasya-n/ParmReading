@@ -9,7 +9,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, ImageMessage
+    MessageEvent, TextMessage, TextSendMessage, ImageMessage, QuickReplyButton, MessageAction, QuickReply
 )
 
 from io import BytesIO
@@ -32,7 +32,8 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 face_client = FaceClient(
     YOUR_FACE_API_ENDPOINT,
     CognitiveServicesCredentials(YOUR_FACE_API_KEY)
-    )
+)
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -57,13 +58,15 @@ def callback():
 def handle_message(event):
     language_list = ["Ruby", "Python", "PHP", "Java", "C"]
 
-    items = [QuickReplyButton(action=MessageAction(label=f"{language}", text=f"{language}が好き")) for language in language_list]
+    items = [QuickReplyButton(action=MessageAction(
+        label=f"{language}", text=f"{language}が好き")) for language in language_list]
 
     messages = TextSendMessage(text="どの言語が好きですか？",
                                quick_reply=QuickReply(items=items))
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
+
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image(event):
@@ -74,7 +77,7 @@ def handle_image(event):
         message_content = line_bot_api.get_message_content(message_id)
         # contentの画像データをバイナリデータとして扱えるようにする
         image = BytesIO(message_content.content)
-        
+
         # Detect from streamで顔検出
         detected_faces = face_client.face.detect_with_stream(image)
         print(detected_faces)
@@ -82,18 +85,20 @@ def handle_image(event):
         if detected_faces != []:
            # 顔検出ができたら顔認証を行う
             valified = face_client.face.verify_face_to_person(
-                face_id = detected_faces[0].face_id,
-                person_group_id = PERSON_GROUP_ID,
-                person_id = PERSON_ID_ZAKOSHI
+                face_id=detected_faces[0].face_id,
+                person_group_id=PERSON_GROUP_ID,
+                person_id=PERSON_ID_ZAKOSHI
             )
             # 認証結果に応じて処理を変える
             if valified:
                 if valified.is_identical:
                     # 顔認証が一致した場合（スコアもつけて返す）
-                    text = 'この写真はザコシショウです(score:{:.3f})'.format(valified.confidence)
+                    text = 'この写真はザコシショウです(score:{:.3f})'.format(
+                        valified.confidence)
                 else:
                     # 顔認証が一致した場合（スコアもつけて返す）
-                    text = 'この写真はザコシショウではありません(score:{:.3f})'.format(valified.confidence)
+                    text = 'この写真はザコシショウではありません(score:{:.3f})'.format(
+                        valified.confidence)
             else:
                 text = '識別できませんでした。'
         else:
@@ -101,11 +106,12 @@ def handle_image(event):
             text = "no faces detected"
     except:
         # エラー時のメッセージ
-        text = "error" 
+        text = "error"
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=text)
     )
+
 
 if __name__ == "__main__":
     app.run()
