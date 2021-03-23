@@ -62,10 +62,9 @@ def handle_message(event):
         label=f"{language}", text=f"{language}が好き")) for language in language_list]
 
     messages = TextSendMessage(text="どの言語が好きですか？",
-                               quick_reply=QuickReply(items=[QuickReplyButton(action=MessageAction(label="スプラッシュボム", text="スプラッシュボム")),
-                                                             QuickReplyButton(action=MessageAction(label="ポイントセンサー", text="ポイントセンサー"))]))
+                               quick_reply=QuickReply(items=items))
     line_bot_api.reply_message(
-        event.reply_token, messages=messages)
+        event.reply_token, messages)
     # TextSendMessage(text=event.message.text))
 
 
