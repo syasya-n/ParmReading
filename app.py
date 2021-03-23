@@ -64,9 +64,8 @@ def handle_message(event):
     messages = TextSendMessage(text="どの言語が好きですか？",
                                quick_reply=QuickReply(items=items))
     line_bot_api.reply_message(
-        event.reply_token,
-        # TextSendMessage(text=event.message.text))
-        messages=messages)
+        event.reply_token, messages=messages)
+    # TextSendMessage(text=event.message.text))
 
 
 @handler.add(MessageEvent, message=ImageMessage)
