@@ -1,3 +1,6 @@
+from msrest.authentication import CognitiveServicesCredentials
+from azure.cognitiveservices.vision.face import FaceClient
+from io import BytesIO
 import os
 from flask import Flask, request, abort
 
@@ -12,10 +15,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, ImageMessage, QuickReplyButton, MessageAction, QuickReply
 )
 
-from io import BytesIO
-
-from azure.cognitiveservices.vision.face import FaceClient
-from msrest.authentication import CognitiveServicesCredentials
+import createRichmenu
 
 app = Flask(__name__)
 
@@ -56,13 +56,19 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    language_list = ["Ruby", "Python", "PHP", "Java", "C"]
+    send_message = event.message.text
+
+    question_list1 = ["18歳未満", "19〜25才", ""]
+    question_list2 = ["プラス思考", "どちらとも言えない", "マイナス思考"]
+    question_list3 = ["文系", "理系", "芸術系", "体育系"]
+    question_list4 = ["文系", "理系", "芸術系", "体育系"]
 
     items = [QuickReplyButton(action=MessageAction(
         label=f"{language}", text=f"{language}が好き")) for language in language_list]
 
     messages = TextSendMessage(text="どの言語が好きですか？",
                                quick_reply=QuickReply(items=items))
+    
     line_bot_api.reply_message(
         event.reply_token, messages)
     # TextSendMessage(text=event.message.text))
