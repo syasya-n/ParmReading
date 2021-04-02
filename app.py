@@ -76,8 +76,8 @@ def handle_message(event):
         messages = TextSendMessage(text=question,
                                    quick_reply=QuickReply(items=items))
 
-    line_bot_api.reply_message(
-        event.reply_token, messages)
+        line_bot_api.reply_message(
+            event.reply_token, messages)
     # TextSendMessage(text=event.message.text))
 
 
