@@ -58,6 +58,24 @@ def callback():
 def handle_message(event):
     send_message = event.message.text
 
+    answer_list = [["自分で決めることが多い", "他人と相談することが多い"],
+                   ["文系", "理系", "芸術系", "体育系"],
+                   ["インドア派", "アウトドア派"],
+                   ["広く浅く", "狭く深く", "他人とは関わらない"]]
+
+    question_list = ["物事を決断するときは",
+                     "自分のタイプは？",
+                     "インドア派？アウトドア派？"
+                     "人付き合いは？"]
+
+    for answer, question in zip(answer_list, question_list):
+
+        items = [QuickReplyButton(action=MessageAction(
+            label=f"{ans}", text=f"{ans}")) for ans in answer]
+
+        messages = TextSendMessage(text=question,
+                                   quick_reply=QuickReply(items=items))
+
     line_bot_api.reply_message(
         event.reply_token, messages)
     # TextSendMessage(text=event.message.text))
