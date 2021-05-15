@@ -1,0 +1,39 @@
+{% extends 'base.html'%}
+{% block body %}
+<div class="for-scroll"></div>
+<div id="js-scroll-top" class="scroll-top">TOPに戻る</div>
+
+<div class="contatiner">
+    <div class="blockquote">
+        アンケートの質問毎に手相データを回答別に集計し、その分析結果を表示します。以下、プルダウンから確認したい質問をお選びください。
+    </div>
+    
+    <div class="cp_ipselect cp_sl01">
+        <select onChange="location.href=value">
+            <option value="#" hidden>現在「質問{{num}}: {{question_list[num-1]}}」が選択されています。</option>
+            {% for i in range(question_total) %}
+            <option value="/answer_merge/{{i+1}}" >質問{{i+1}} : {{question_list[i]}}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="tab-wrap">
+    {% for i in range(1,option_number + 1) %}
+        <input id="TAB-{{i}}" type="radio" name="TAB" class="tab-switch" checked="checked" /><label class="tab-label" for="TAB-{{i}}">{{answer_list_show[i-1]}}</label>
+        <div class="tab-content">
+            {% for user_answer in user_answer_list %}
+                {% if user_answer[1] == i %}
+                <img src="/static/img/{{user_answer[0]}}.jpg" alt="parm_information"/>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <input id="TAB-99" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-99">全回答を比較</label>
+    <div class="tab-content">
+        {% for user_answer in user_answer_list %}
+        <img src="/static/img/{{user_answer[0]}}.jpg" alt="parm_information"/>
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap-reboot.css')}}">
+    <title>Document</title>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- <nav class="navbar navbar-light bg-light p-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" style="font-size:1.5rem">手相アプリ</a>
+        </div>
+    </nav> -->
+    {% block body %}{% endblock %}
+    <script src="{{url_for('static',filename='js/script.js')}}"></script>
+</body>
+</html>
