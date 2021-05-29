@@ -12,7 +12,7 @@
 ---
 
 下記 QR コードを読み取って、Line アプリの友達になる。  
-![QRコード](https://qr-official.line.me/sid/L/685nmdcj.png)
+<img src="https://qr-official.line.me/sid/M/685nmdcj.png">
 
 ## Web サイト URL
 
