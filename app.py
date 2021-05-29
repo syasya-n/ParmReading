@@ -124,7 +124,6 @@ def handle_postback(event):
 
             # 最後の問題に回答し、答えがDBに格納済
             if mes in answer_list[-1]:
-                uri_path = '/answer_merge/1'
                 messages = TemplateSendMessage(
                     alt_text='Buttons template',
                     template=ButtonsTemplate(
@@ -137,7 +136,7 @@ def handle_postback(event):
                             ),
                             URIAction(
                                 label='手相サイトへ移動',
-                                uri='https:/www.xxx'
+                                uri='https://app-parmreading.herokuapp.com/merge/1'
                             )
                         ]
                     )
