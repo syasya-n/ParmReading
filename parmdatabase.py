@@ -8,7 +8,7 @@ import MySQLdb
 DATABASE = 'mysql://root:@localhost/parm_reading'
 
 # setup sqlalchemy
-engine = create_engine(DATABASE, encoding='utf-8', echo=True)
+engine = create_engine(DATABASE, encoding='utf-8', echo=False)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
@@ -17,7 +17,6 @@ Base.query = db_session.query_property()
 
 
 # テーブルクラス
-
 
 class ParmInfo(Base):
     __tablename__ = 'parm_info'

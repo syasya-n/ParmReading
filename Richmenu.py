@@ -1,5 +1,4 @@
 def createRichmenu():
-    result = False
     try:
         # define a new richmenu
         rich_menu_to_create = RichMenu(
@@ -26,7 +25,7 @@ def createRichmenu():
 
         with open(path, 'rb') as f:
             line_bot_api.set_rich_menu_image(
-                richMenuId, "img/zakoshi1.jpeg", f)
+                richMenuId, "static/img/zakoshi1.jpeg", f)
 
         # set the default rich menu
         line_bot_api.set_default_rich_menu(richMenuId)

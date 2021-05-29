@@ -1,7 +1,5 @@
 {% extends 'base.html'%}
 {% block body %}
-<div class="for-scroll"></div>
-<div id="js-scroll-top" class="scroll-top">TOPに戻る</div>
 
 <div class="contatiner">
     <div class="blockquote">
@@ -21,17 +19,13 @@
     {% for i in range(1,option_number + 1) %}
         <input id="TAB-{{i}}" type="radio" name="TAB" class="tab-switch" checked="checked" /><label class="tab-label" for="TAB-{{i}}">{{answer_list_show[i-1]}}</label>
         <div class="tab-content">
-            {% for user_answer in user_answer_list %}
-                {% if user_answer[1] == i %}
-                <img src="/static/img/{{user_answer[0]}}.jpg" alt="parm_information"/>
-                {% endif %}
-            {% endfor %}
+            <img src="/static/img/merge/{{num}}-{{i}}.jpg" alt="parm_information"/>
         </div>
     {% endfor %}
     <input id="TAB-99" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-99">全回答を比較</label>
     <div class="tab-content">
-        {% for user_answer in user_answer_list %}
-        <img src="/static/img/{{user_answer[0]}}.jpg" alt="parm_information"/>
+    {% for i in range(1,option_number + 1) %}
+        <img src="/static/img/merge/{{num}}-{{i}}.jpg" alt="parm_information"/>
     {% endfor %}
     </div>
 </div>
